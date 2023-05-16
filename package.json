@@ -9,7 +9,7 @@
     "client": "cd client && npm start",
     "dev": "concurrently \"npm run start\" \"npm run client\""
   },
-  "author": "Sonam Dangi",
+  "author": "Srijan Tripathi",
   "license": "ISC",
   "description": "",
   "dependencies": {
