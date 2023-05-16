@@ -18,7 +18,6 @@ const createTagCtrl = async (req, res) => {
             return res.status(200).send({ success: true, message: `${tag.name} created successfully`, tag });
         }
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: true, message: `Error in createTagCtrl api ${error.message}`, error })
     }
 }
@@ -34,7 +33,6 @@ const updateTagCtrl = async (req, res) => {
             return res.status(200).send({ success: true, message: `${tag.name} updated successfully`, tag })
         }
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: true, message: `Error in updateTagCtrl api ${error.message}`, error })
     }
 }
@@ -45,7 +43,6 @@ const getSingleTagCtrl = async (req, res) => {
         const tag = await tagModel.findOne({ slug: req.params.slug });
         res.status(200).send({ success: true, message: 'Single Tag Fetched Successfully', tag })
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `get single tag api issue : ${error}`, error })
     }
 }
@@ -56,7 +53,6 @@ const deleteTagCtrl = async (req, res) => {
         const tag = await tagModel.findByIdAndDelete(req.params.id);
         return res.status(200).send({ success: true, message: `${tag.name} deleted successfully` });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: true, message: `Error in deleteTagCtrl api ${error.message}`, error })
     }
 }
@@ -67,7 +63,6 @@ const getAllTagsCtrl = async (req, res) => {
         const tags = await tagModel.find({});
         res.status(200).send({ success: true, message: 'All tags fetched successfully', tags });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: true, message: `Error in getAllTagsCtrl api ${error.message}`, error })
     }
 }

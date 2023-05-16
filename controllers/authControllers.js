@@ -20,7 +20,6 @@ const registerCtrl = async (req, res) => {
         await newUser.save();
         res.status(200).send({ success: true, message: 'Register Successful' })
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `Register api issue : ${error.message}`.bgRed.black, error })
     }
 }
@@ -40,7 +39,6 @@ const loginCtrl = async (req, res) => {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRETKEY, { expiresIn: "1d" })
         return res.status(200).send({ success: true, message: 'Login Successful', token, user })
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `Login api issue : ${error.message}`.bgRed.black, error })
     }
 }
@@ -62,7 +60,6 @@ const forgotPasswordCtrl = async (req, res) => {
 
         res.status(200).send({ success: true, message: 'Password Reset Successful' })
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `Forgot Password api issue : ${error.message}`, error })
     }
 }
@@ -82,7 +79,6 @@ const getAllUsers = async (req, res) => {
             res.status(200).send({ success: true, message: 'All users fetched Successful', users: notAdminUsers })
         }
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `Get all users api issue : ${error.message}`.bgRed.white, error })
     }
 }
@@ -96,7 +92,6 @@ const getUserDataCtrl = async (req, res) => {
         }
         res.status(200).send({ success: true, user })
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `Login api issue : ${error.message}`.bgRed.white, error })
     }
 }
@@ -104,13 +99,10 @@ const getUserDataCtrl = async (req, res) => {
 //updateProfile Ctrl
 const updateProfileCtrl = async (req, res) => {
     try {
-        // const user = await userModel.findById(req.user._id);
-        //console.log(req.body)
         const updatedUser = await userModel.findByIdAndUpdate(req.body.userId, { ...req.body }, { new: true });
 
         res.status(200).send({ success: true, message: 'Profile Updated Successfully', updatedUser });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `updateProfile api issue : ${error.message}`.bgRed.white, error })
     }
 }
@@ -122,11 +114,9 @@ const createOrdersController = async (req, res) => {
             ...req.body,
             buyer: req.body.userId
         })
-        //console.log(order)
         await order.save()
         res.status(200).send({ success: true, message: 'Order Successfully', order });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({
             success: false,
             message: "Error while creating Orders",
@@ -160,10 +150,8 @@ const getOrdersController = async (req, res) => {
             }
             allOrders.push(ord)
         }
-        //console.log(allOrders)
         res.status(200).send({ success: true, message: 'Orders fetched Successfully', allOrders });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({
             success: false,
             message: "Error WHile Geting Orders",

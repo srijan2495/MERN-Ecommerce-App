@@ -9,7 +9,6 @@ const createAddressCtrl = async (req, res) => {
 
         return res.status(200).send({ success: true, message: `${address.addressType} address created successfully`, address });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `Error in createAddressCtrl api : ${error.message}`.bgRed });
     }
 }
@@ -22,7 +21,6 @@ const updateAddressCtrl = async (req, res) => {
 
         return res.status(200).send({ success: true, message: `${address.addressType} address updated successfully`, address });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `Error in updateAddressCtrl api : ${error.message}`.bgRed });
     }
 }
@@ -33,7 +31,6 @@ const deleteAddressCtrl = async (req, res) => {
         const address = await addressModel.findByIdAndDelete(req.params.id);
         return res.status(200).send({ success: true, message: `address deleted successfully`, address });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `Error in deleteAddressCtrl api : ${error.message}`.bgRed });
     }
 }
@@ -44,7 +41,6 @@ const getAllAddressCtrl = async (req, res) => {
         const addresses = await addressModel.find({});
         return res.status(200).send({ success: true, message: `addresses fetched successfully`, addresses });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `Error in getAllAddressCtrl api : ${error.message}`.bgRed });
     }
 }

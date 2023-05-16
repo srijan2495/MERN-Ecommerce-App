@@ -19,7 +19,6 @@ const createCategoryCtrl = async (req, res) => {
             res.status(200).send({ success: true, message: 'Category created Successfully', newCategory })
         }
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `Create Category api issue : ${error}`, error })
     }
 };
@@ -35,7 +34,6 @@ const updateCategoryCtrl = async (req, res) => {
             res.status(200).send({ success: true, message: 'Category Updated Successfully', category });
         }
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `update category api issue : ${error}`, error })
     }
 }
@@ -46,7 +44,6 @@ const getCategoryCtrl = async (req, res) => {
         const category = await categoryModel.find({});
         res.status(200).send({ success: true, message: 'All Categories fetched Successfully', category });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `get category api issue : ${error}`, error })
     }
 }
@@ -57,7 +54,6 @@ const getSingleCategoryCtrl = async (req, res) => {
         const category = await categoryModel.findOne({ slug: req.params.slug });
         res.status(200).send({ success: true, message: 'Single Category Fetched Successfully', category })
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `get single category api issue : ${error}`, error })
     }
 }
@@ -65,21 +61,11 @@ const getSingleCategoryCtrl = async (req, res) => {
 //deleteCategory Ctrl
 const deleteCategoryCtrl = async (req, res) => {
     try {
-        // const product = await productModel.find()
-        // const prod = []
-        // for (let i = 0; i < product.length; i++) {
-        //     //console.log(product[i].category)
-        //     //console.log(`new ObjectId("${req.params.id}")`)
-        //     if (product[i].category == `new ObjectId("${req.params.id}")`) {
-        //         product.splice(i, 1)
-        //     }
-        // }
         // // await product.save()
         const category = await categoryModel.findByIdAndDelete(req.params.id);
 
         res.status(200).send({ success: true, message: 'Category deleted successfully', category });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: true, message: `delete category api issue : ${error}`, error })
     }
 }

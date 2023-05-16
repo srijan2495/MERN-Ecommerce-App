@@ -45,14 +45,12 @@ const createProductCtrl = async (req, res) => {
         await product.save();
         res.status(200).send({ success: true, message: 'Product created successfully', product })
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `create product api issue : ${error}`, error })
     }
 }
 
 //updateProduct Ctrl
 const updateProductCtrl = async (req, res) => {
-    // //console.log(req.fields);
     try {
         const { name, slug, description, originalPrice, price, category, tag, quantity, shipping, isSpecial, photo } = req.body;
         //vaidation
@@ -78,7 +76,6 @@ const updateProductCtrl = async (req, res) => {
         await product.save();
         res.status(200).send({ success: true, message: 'Product updated successfully', product })
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `update product api issue : ${error}`, error })
     }
 }
@@ -89,7 +86,6 @@ const getAllProductsCtrl = async (req, res) => {
         const products = await productModel.find({}).populate("category", "tag").limit(12).sort({ createdAt: -1 });
         res.status(200).send({ success: true, message: 'All products fetched successfully', total: products.length, products })
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `get all products api issue : ${error}`, error })
     }
 }
@@ -97,12 +93,9 @@ const getAllProductsCtrl = async (req, res) => {
 //getSingleProduct Ctrl
 const getSingleProductCtrl = async (req, res) => {
     try {
-        // const product = await productModel.findOne({ slug: req.params.slug }).select("-photo").populate("category", "tags");
         const product = await productModel.findOne({ slug: req.params.slug }).populate("category").populate("tag");
-        //console.log(product);
         res.status(200).send({ success: true, message: 'Single Product Fetched Successfully', product })
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `get single product api issue : ${error}`, error })
     }
 }
@@ -116,7 +109,6 @@ const getProductPhotoCtrl = async (req, res) => {
             return res.status(200).send(product.photo.data)
         }
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `get product photo api issue : ${error}`, error })
     }
 }
@@ -127,7 +119,6 @@ const deleteProductCtrl = async (req, res) => {
         const product = await productModel.findByIdAndDelete(req.params.pid);
         res.status(200).send({ success: true, message: 'Product Deleted Successfully', product });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `delete product api issue : ${error}`, error })
     }
 }
@@ -142,7 +133,6 @@ const productFilterCtrl = async (req, res) => {
         const products = await productModel.find(args);
         res.status(200).send({ success: true, message: 'Product Filtered Successfully', products });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `product filter api issue : ${error}`, error })
     }
 }
@@ -152,10 +142,8 @@ const productCategoryCtrl = async (req, res) => {
     try {
         const category = await categoryModel.findOne({ slug: req.params.slug });
         const products = await productModel.find({ category }).populate("category");
-        //console.log(category);
         res.status(200).send({ success: true, message: 'fetched category wise products', category, products })
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `product category filter api issue : ${error}`, error })
     }
 }
@@ -164,12 +152,9 @@ const productCategoryCtrl = async (req, res) => {
 const productTagCtrl = async (req, res) => {
     try {
         const tag = await tagModel.findOne({ slug: req.params.slug });
-        //console.log(tag);
         const products = await productModel.find({ tag: tag._id });
-        //console.log(products);
         res.status(200).send({ success: true, message: 'fetched category wise products', tag, products })
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `product category filter api issue : ${error}`, error })
     }
 }
@@ -188,7 +173,6 @@ const searchProductCtrl = async (req, res) => {
             res.status(200).send({ success: true, results });
         }
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `search product filter api issue : ${error}`, error })
     }
 }
@@ -199,12 +183,10 @@ const decreaseProductQuantityCtrl = async (req, res) => {
         const product = await productModel.findOne({ _id: req.params.id }).select("-photo");
         const productQuantity = product.quantity;
         const updatedProductQuantity = productQuantity - 1;
-        // //console.log(updatedProductQuantity);
         const updatedProduct = await productModel.findByIdAndUpdate(product._id, { quantity: updatedProductQuantity }).select("-photo");
         await updatedProduct.save();
         res.status(200).send({ success: true, message: 'Quantity decreased successfully', updatedProduct });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `decreaseProductQuantityCtrl filter api issue : ${error}`, error })
     }
 }
@@ -219,7 +201,6 @@ const increaseProductQuantityCtrl = async (req, res) => {
         await updatedProduct.save();
         res.status(200).send({ success: true, message: 'Quantity increased successfully', updatedProduct });
     } catch (error) {
-        //console.log(error);
         res.status(500).send({ success: false, message: `increaseProductQuantityCtrl filter api issue : ${error}`, error })
     }
 }
@@ -234,11 +215,9 @@ const braintreeTokenController = async (req, res) => {
             }
             else {
                 res.send(response);
-                // //console.log(response);
             }
         });
     } catch (error) {
-        //console.log(error)
     }
 
 }
@@ -257,8 +236,6 @@ const brainTreePaymentController = async (req, res) => {
                 submitForSettlement: true
             }
         }, function (error, result) {
-            //console.log(error, "QWERTY");
-            //console.log(result, "abcde");
             if (result) {
                 const order = new ORDERmODEL({
                     products: cart,
@@ -267,11 +244,6 @@ const brainTreePaymentController = async (req, res) => {
                     // buyer: req.user._id
                 })
                 order.save();
-                //console.log(newTransaction);
-                //console.log(order);
-                //console.log(order.products);
-                //console.log(order.payment);
-                //console.log(order.buyer)
                 res.json({ ok: true })
             }
             else {
@@ -280,7 +252,6 @@ const brainTreePaymentController = async (req, res) => {
         }
         )
     } catch (error) {
-        //console.log(error)
     }
 }
 
